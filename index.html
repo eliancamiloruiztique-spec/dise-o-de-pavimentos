@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculadora de pavimentos para diseño de pavimentos flexibles y rígidos mediante tránsito, N de ejes equivalentes, metodología AASHTO-93 y especificación de geotextiles AASHTO M288.">
+<meta name="keywords" content="calculadora de pavimentos, diseño de pavimentos, pavimento flexible, pavimento rígido, N de ejes equivalentes, ESAL, W18, AASHTO 93, geotextiles, AASHTO M288, Tecnológico Comfenalco">
+<meta name="author" content="Tecnológico Comfenalco">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Calculadora de Pavimentos | Tecnológico Comfenalco">
+<meta property="og:description" content="Herramienta académica para diseño de pavimentos rígidos y flexibles mediante tránsito y N de ejes equivalentes.">
+<meta property="og:type" content="website">
+<link rel="icon" type="image/png" href="logo-comfenalco.png">
+<title>Calculadora de Pavimentos | Tecnológico Comfenalco</title>
+<link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="brand">
+    <img src="logo-comfenalco.png" alt="Tecnológico Comfenalco" class="brand-logo">
+    <div class="brand-divider"></div>
+    <div class="brand-copy">
+      <strong>CALCULADORA DE PAVIMENTOS</strong>
+      <span>Diseño académico · Pavimento flexible y rígido</span>
+    </div>
+  </div>
+  <div class="header-actions">
+    <button class="top-link" onclick="window.scrollTo({top:0,behavior:'smooth'})">Inicio</button>
+    <button class="top-link" onclick="ejemploFlex(); abrirPanel('params-panel')">Ejemplo</button>
+    <button class="top-primary" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">Nueva calculación</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-content">
+      <div class="eyebrow"><span class="dot"></span> HERRAMIENTA DE DISEÑO DE PAVIMENTOS</div>
+      <h1>Calculadora de<br><span>pavimentos</span></h1>
+      <p>Diseña estructuras de pavimento <b>flexibles y rígidas</b> a partir del tránsito y el número de ejes equivalentes, con cálculo basado en AASHTO-93 y especificación de <b>geotextiles</b> según AASHTO M288-00.</p>
+      <div class="hero-buttons">
+        <button class="hero-primary" onclick="document.getElementById('app').scrollIntoView({behavior:'smooth'})">+ Nuevo proyecto</button>
+        <button class="hero-secondary" onclick="ejemploFlex(); document.getElementById('app').scrollIntoView({behavior:'smooth'})">Ver ejemplo →</button>
+      </div>
+      <div class="hero-note"><span>✓</span> Acceso público · Sin contraseña · Uso académico/referencial</div>
+    </div>
+    <div class="hero-preview">
+      <div class="preview-top"><span>DISEÑO ESTRUCTURAL</span><span class="live-dot">● ONLINE</span></div>
+      <div class="preview-road">
+        <div class="road-layer asphalt">CARPETA ASFÁLTICA</div>
+        <div class="road-layer base">BASE GRANULAR</div>
+        <div class="road-layer subbase">SUBBASE GRANULAR</div>
+        <div class="road-layer soil">SUBRASANTE</div>
+      </div>
+      <div class="preview-stats"><div><small>METODOLOGÍA</small><b>AASHTO-93</b></div><div><small>TIPOS</small><b>FLEXIBLE / RÍGIDO</b></div><div><small>TRÁNSITO</small><b>W18 / ESAL</b></div></div>
+    </div>
+  </section>
+
+  <section class="modules" aria-label="Módulos principales">
+    <div class="section-heading"><span>01</span><div><h2>Módulos de cálculo</h2><p>Selecciona el componente que deseas desarrollar.</p></div></div>
+    <div class="module-grid">
+      <button class="module-card active" onclick="setTipo('flexible'); abrirPanel('params-panel')"><span class="module-icon">01</span><div><h3>Pavimento Flexible</h3><p>Diseño de capas mediante número estructural SN.</p></div><span class="arrow">→</span></button>
+      <button class="module-card" onclick="setTipo('rigido'); abrirPanel('params-panel')"><span class="module-icon">02</span><div><h3>Pavimento Rígido</h3><p>Diseño de losa con parámetros AASHTO-93.</p></div><span class="arrow">→</span></button>
+      <button class="module-card" onclick="setMetodo('transito'); abrirPanel('params-panel'); document.getElementById('transito-params').scrollIntoView({behavior:'smooth'})"><span class="module-icon">03</span><div><h3>Tránsito y N de ejes</h3><p>Convierte TPD y crecimiento a ESAL/W18.</p></div><span class="arrow">→</span></button>
+      <button class="module-card" onclick="abrirPanel('results-panel')"><span class="module-icon">04</span><div><h3>Memoria de cálculo</h3><p>Consulta resultados y genera el informe técnico.</p></div><span class="arrow">→</span></button>
+      <button class="module-card" onclick="abrirPanel('m288-panel')"><span class="module-icon">05</span><div><h3>Geotextiles M288</h3><p>Clase, tablas y traslapes según AASHTO M288-00.</p></div><span class="arrow">→</span></button>
+    </div>
+  </section>
+
+  <section id="app" class="calculator-shell">
+    <div class="calc-heading"><div><div class="eyebrow">02 · ÁREA DE TRABAJO</div><h2>Proyecto de pavimento</h2><p>Ingresa los parámetros, ejecuta el cálculo y revisa la estructura resultante.</p></div><div class="calc-badge" id="hdr-tipo">FLEXIBLE</div></div>
+    <div class="workflow"><span class="step active">01 Información</span><i>→</i><span class="step">02 Tránsito</span><i>→</i><span class="step">03 Subrasante</span><i>→</i><span class="step">04 Diseño</span><i>→</i><span class="step">05 Resultados</span></div>
+    <div class="app-toolbar">
+      <button class="tool-btn active" id="btn-flex" onclick="setTipo('flexible')">Flexible</button>
+      <button class="tool-btn" id="btn-rig" onclick="setTipo('rigido')">Rígido</button>
+      <button class="tool-btn" onclick="togglePanel('params-panel')">⚙ Parámetros</button>
+      <button class="tool-btn calculate" onclick="calcular()">Calcular diseño</button>
+      <button class="tool-btn" onclick="togglePanel('results-panel')">Resultados</button>
+      <button class="tool-btn m288" onclick="togglePanel('m288-panel')">🧵 Geotextiles M288</button>
+      <button class="tool-btn report" onclick="generarInforme()">Informe técnico</button>
+      <button class="tool-link" onclick="ejemploFlex()">Ejemplo flexible</button>
+      <button class="tool-link" onclick="ejemploRig()">Ejemplo rígido</button>
+    </div>
+    <div class="status-bar"><span id="status-txt">AASHTO-93 · Seleccione el tipo de pavimento y presione Calcular diseño.</span></div>
+
+    <div class="visual-card"><div class="visual-label">VISUALIZACIÓN DE LA SECCIÓN</div><div id="cv-wrap"><canvas id="cv" width="1280" height="640"></canvas></div><div class="quick" id="quick-summary"></div></div>
+
+    <div class="panel" id="params-panel">
+      <h3 id="params-title">Parámetros – flexible</h3>
+      <div class="param-group"><div class="group-title">Método de tránsito</div><div class="transito-method"><button class="mbtn active" id="metodo-esal" onclick="setMetodo('esal')">ESAL (W18)</button><button class="mbtn" id="metodo-transito" onclick="setMetodo('transito')">Tránsito (TPD → ESAL)</button></div></div>
+      <div id="params-grid"></div>
+      <div id="transito-params" style="display:none;" class="param-group"><div class="group-title">Parámetros de tránsito y conteo vehicular</div><div class="param-grid" id="transito-grid"></div><div class="traffic-count"><div class="group-title">Conteo de vehículos comerciales (TPD, ambos sentidos)</div><div class="vehiculos-grid" id="vehiculos-grid"></div>
+        <div class="group-title" style="margin-top:12px">Factor de daño (ESAL/vehículo) — flexible</div><div class="vehiculos-grid" id="factoresF-grid"></div>
+        <div class="group-title" style="margin-top:12px">Factor de daño (ESAL/vehículo) — rígido</div><div class="vehiculos-grid" id="factoresR-grid"></div>
+        <div class="note-txt">Los factores de daño son valores de ejemplo. Reemplácelos por los de su estudio de tránsito/pesaje.</div>
+        <div class="readout" id="esal-readout"></div></div></div>
+      <div class="formula-box" id="formula-box"></div>
+    </div>
+
+    <div class="panel" id="results-panel">
+      <div class="result-heading"><div><h3 id="res-title">Resultados del diseño</h3><p>Valores obtenidos con los parámetros ingresados.</p></div><button class="mini-report" onclick="generarInforme()">Generar memoria ↗</button></div>
+      <div id="warnings-resultado"></div>
+      <div class="res-grid" id="res-grid"></div>
+      <table class="capas-table" id="capas-table"></table>
+      <div id="sugerencia-resultado" style="margin-top:16px; padding:14px 18px; border-radius:8px; font-family:var(--mono); font-size:11px; line-height:1.7;"></div>
+    </div>
+    <div class="panel" id="m288-panel">
+      <div class="result-heading"><div><h3>Especificación de geosintéticos — AASHTO M288-00</h3><p>Clase de geotextil, requisitos de resistencia, filtración y traslapes según el CBR de la subrasante.</p></div></div>
+      <div id="m288-content"></div>
+    </div>
+    <div class="app-footer">Tecnológico Comfenalco · Implementación académica de la metodología AASHTO Guide for Design of Pavement Structures, 1993.</div>
+  </section>
+
+  <section class="seo-info"><div><span class="eyebrow">03 · REFERENCIA</span><h2>Diseño de pavimentos en línea</h2><p>Herramienta orientada al apoyo académico para analizar pavimentos flexibles y rígidos, tránsito, N de ejes equivalentes, ESAL, W18, parámetros de diseño AASHTO-93 y selección de geotextiles según AASHTO M288-00.</p></div><div class="reference-grid"><span>AASHTO-93</span><span>ESAL / W18</span><span>Pavimento flexible</span><span>Pavimento rígido</span><span>Geotextiles M288</span></div></section>
+</main>
+<footer class="site-footer"><img src="logo-comfenalco.png" alt="Tecnológico Comfenalco"><span>Calculadora de Pavimentos · Herramienta académica/referencial</span></footer>
+<noscript>Esta herramienta necesita JavaScript habilitado.</noscript>
+<script src="js/app.js"></script>
+</body>
+</html>
