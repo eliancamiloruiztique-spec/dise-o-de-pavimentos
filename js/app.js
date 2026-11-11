@@ -984,7 +984,7 @@ function drawScene(){
   const n=layers.length;
 
   /* cargas móviles (para la deformación) */
-  const busX=vehPos(1.2,0),truckX=vehPos(0.95,470),carX=vehPos(1.7,930);
+  const busX=vehPos(2.4,0),truckX=vehPos(1.9,470),carX=vehPos(3.4,930);
   const loads=[{x:busX,w:0.7},{x:truckX,w:1},{x:carX,w:0.25}];
   function defl(x,k){
     if(k===0)return 0;
